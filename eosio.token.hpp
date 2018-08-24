@@ -32,7 +32,7 @@ namespace eosio {
                         asset        quantity,
                         string       memo );
 
-         void unlock( account_name issuer, symbol_type symbol );
+         void unlock( symbol_type symbol );
       
       
          inline asset get_supply( symbol_name sym )const;

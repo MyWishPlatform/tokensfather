@@ -88,15 +88,14 @@ void token::transfer( account_name from,
     add_balance( to, quantity, from );
 }
 
-void token::unlock( account_name owner, symbol_type symbol ) {
-    require_auth( owner );
-    require_recipient( owner );
+void token::unlock( symbol_type symbol ) {
     stats statstable( _self, symbol.name() );
     auto it = statstable.find( symbol.name() );
     eosio_assert( it != statstable.end(), "token does not exists" );
-    eosio_assert( it->issuer == owner, "owner is not you" );
     eosio_assert( it->lock, "token not locked" );
-    statstable.modify( it, owner, []( auto& st ) {
+    require_auth( it->issuer );
+    require_recipient( it->issuer );
+    statstable.modify( it, it->issuer, []( auto& st ) {
         st.lock = false;
     });
 }
