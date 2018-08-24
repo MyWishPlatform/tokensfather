@@ -40,7 +40,8 @@
       "fields": [
         {"name":"supply", "type":"asset"},
         {"name":"max_supply", "type":"asset"},
-        {"name":"issuer", "type":"account_name"}
+        {"name":"issuer", "type":"account_name"},
+        {"name":"lock", "type":"bool"}
       ]
     }
   ],

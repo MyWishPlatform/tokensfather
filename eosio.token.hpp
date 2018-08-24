@@ -1,3 +1,7 @@
+/**
+ *  @file
+ *  @copyright defined in eos/LICENSE.txt
+ */
 #pragma once
 
 #include <eosiolib/asset.hpp>
@@ -18,7 +22,8 @@ namespace eosio {
          token( account_name self ):contract(self){}
 
          void create( account_name issuer,
-                      asset        maximum_supply);
+                      asset        maximum_supply,
+                      bool         lock);
 
          void issue( account_name to, asset quantity, string memo );
 
@@ -26,6 +31,8 @@ namespace eosio {
                         account_name to,
                         asset        quantity,
                         string       memo );
+
+         void unlock( account_name issuer, symbol_type symbol );
       
       
          inline asset get_supply( symbol_name sym )const;
@@ -43,6 +50,7 @@ namespace eosio {
             asset          supply;
             asset          max_supply;
             account_name   issuer;
+            bool           lock;
 
             uint64_t primary_key()const { return supply.symbol.name(); }
          };
@@ -76,4 +84,4 @@ namespace eosio {
       return ac.balance;
    }
 
-}
+} /// namespace eosio

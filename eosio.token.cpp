@@ -1,9 +1,15 @@
+/**
+ *  @file
+ *  @copyright defined in eos/LICENSE.txt
+ */
+
 #include "eosio.token.hpp"
 
 namespace eosio {
 
 void token::create( account_name issuer,
-                    asset        maximum_supply )
+                    asset        maximum_supply,
+                    bool lock )
 {
     require_auth( _self );
 
@@ -20,6 +26,7 @@ void token::create( account_name issuer,
        s.supply.symbol = maximum_supply.symbol;
        s.max_supply    = maximum_supply;
        s.issuer        = issuer;
+       s.lock          = lock;
     });
 }
 
@@ -66,6 +73,8 @@ void token::transfer( account_name from,
     stats statstable( _self, sym );
     const auto& st = statstable.get( sym );
 
+    eosio_assert( !st.lock || from == st.issuer, "token is locked" );
+
     require_recipient( from );
     require_recipient( to );
 
@@ -77,6 +86,19 @@ void token::transfer( account_name from,
 
     sub_balance( from, quantity );
     add_balance( to, quantity, from );
+}
+
+void token::unlock( account_name owner, symbol_type symbol ) {
+    require_auth( owner );
+    require_recipient( owner );
+    stats statstable( _self, symbol.name() );
+    auto it = statstable.find( symbol.name() );
+    eosio_assert( it != statstable.end(), "token does not exists" );
+    eosio_assert( it->issuer == owner, "owner is not you" );
+    eosio_assert( it->lock, "token not locked" );
+    statstable.modify( it, owner, []( auto& st ) {
+        st.lock = false;
+    });
 }
 
 void token::sub_balance( account_name owner, asset value ) {
@@ -110,6 +132,6 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
    }
 }
 
-}
+} /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer) )
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(unlock) )
