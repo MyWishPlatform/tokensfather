@@ -9,7 +9,7 @@ namespace eosio {
 
 void token::create( account_name issuer,
                     asset        maximum_supply,
-                    bool lock )
+                    bool         lock )
 {
     require_auth( _self );
 
