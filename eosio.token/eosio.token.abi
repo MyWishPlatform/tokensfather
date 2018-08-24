@@ -18,7 +18,7 @@
      "base": "",
      "fields": [
         {"name":"issuer", "type":"account_name"},
-        {"name":"maximum_supply", "type":"asset"}
+        {"name":"maximum_supply", "type":"asset"},
         {"name":"lock", "type":"bool"}
      ]
   },{
@@ -28,6 +28,12 @@
         {"name":"to", "type":"account_name"},
         {"name":"quantity", "type":"asset"},
         {"name":"memo", "type":"string"}
+     ]
+  },{
+     "name": "unlock",
+     "base": "",
+     "fields": [
+        {"name":"symbol", "type":"symbol"}
      ]
   },{
       "name": "account",
@@ -58,8 +64,11 @@
       "name": "create",
       "type": "create",
       "ricardian_contract": ""
+    }, {
+      "name": "unlock",
+      "type": "unlock",
+      "ricardian_contract": ""
     }
-
   ],
   "tables": [{
       "name": "accounts",
