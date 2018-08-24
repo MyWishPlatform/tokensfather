@@ -30,7 +30,6 @@ void token::create( account_name issuer,
     });
 }
 
-
 void token::issue( account_name to, asset quantity, string memo )
 {
     auto sym = quantity.symbol;
