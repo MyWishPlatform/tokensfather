@@ -22,8 +22,9 @@ namespace eosio {
          token( account_name self ):contract(self){}
 
          void create( account_name issuer,
-                      asset        maximum_supply,
-                      bool         lock);
+                      asset        maximum_supply);
+         void createlocked( account_name issuer,
+                      asset        maximum_supply);
 
          void issue( account_name to, asset quantity, string memo );
 
@@ -58,6 +59,9 @@ namespace eosio {
          typedef eosio::multi_index<N(accounts), account> accounts;
          typedef eosio::multi_index<N(stat), currency_stats> stats;
 
+         void _create( account_name issuer,
+                      asset        maximum_supply,
+                      bool         lock);
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
 

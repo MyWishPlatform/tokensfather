@@ -7,9 +7,9 @@
 
 namespace eosio {
 
-void token::create( account_name issuer,
+void token::_create( account_name issuer,
                     asset        maximum_supply,
-                    bool         lock = false )
+                    bool         lock )
 {
     require_auth( _self );
 
@@ -28,6 +28,14 @@ void token::create( account_name issuer,
        s.issuer        = issuer;
        s.lock          = lock;
     });
+}
+
+void token::create( account_name issuer, asset maximum_supply) {
+	_create(issuer, maximum_supply, false);
+}
+
+void token::createlocked( account_name issuer, asset maximum_supply) {
+	_create(issuer, maximum_supply, true);
 }
 
 void token::issue( account_name to, asset quantity, string memo )
@@ -132,4 +140,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(unlock) )
+EOSIO_ABI( eosio::token, (create)(createlocked)(issue)(transfer)(unlock) )

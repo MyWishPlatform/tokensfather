@@ -18,8 +18,14 @@
      "base": "",
      "fields": [
         {"name":"issuer", "type":"account_name"},
-        {"name":"maximum_supply", "type":"asset"},
-        {"name":"lock", "type":"bool"}
+        {"name":"maximum_supply", "type":"asset"}
+     ]
+    },{
+     "name": "createlocked",
+     "base": "",
+     "fields": [
+        {"name":"issuer", "type":"account_name"},
+        {"name":"maximum_supply", "type":"asset"}
      ]
   },{
      "name": "issue",
@@ -63,6 +69,10 @@
     }, {
       "name": "create",
       "type": "create",
+      "ricardian_contract": ""
+    }, {
+      "name": "createlocked",
+      "type": "createlocked",
       "ricardian_contract": ""
     }, {
       "name": "unlock",
