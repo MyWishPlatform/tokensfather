@@ -114,6 +114,8 @@ void token::burn(account_name owner, eosio::asset value) {
 	stats statstable(this->_self, sym);
 	auto it = statstable.find(sym);
 
+	eosio_assert(it != statstable.end(), "No symbol found");
+
 	statstable.modify(it, owner, [&](auto& s) {
 		s.supply -= value;
 		s.max_supply -= value;
