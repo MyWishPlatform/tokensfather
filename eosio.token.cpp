@@ -110,17 +110,16 @@ void token::unlock( symbol_type symbol ) {
 void token::burn(account_name owner, eosio::asset value) {
 	require_auth(owner);
 
-	sub_balance(owner, value);
-
 	auto sym = value.symbol.name();
 	stats statstable(this->_self, sym);
 	auto it = statstable.find(sym);
 
-	eosio_assert(it != statstable.end(), "Symbol not found");
-	
 	statstable.modify(it, owner, [&](auto& s) {
 		s.supply -= value;
+		s.max_supply -= value;
 	});
+
+	sub_balance(owner, value);
 }
 
 void token::sub_balance( account_name owner, asset value ) {
