@@ -34,8 +34,9 @@ namespace eosio {
                         string       memo );
 
          void unlock( symbol_type symbol );
-      
-      
+
+         void burn( account_name owner, eosio::asset value );
+
          inline asset get_supply( symbol_name sym )const;
          
          inline asset get_balance( account_name owner, symbol_name sym )const;
