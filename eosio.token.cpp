@@ -11,7 +11,7 @@ void token::_create( account_name issuer,
                     asset        maximum_supply,
                     bool         lock )
 {
-    require_auth( _self );
+    require_auth( creator );
 
     auto sym = maximum_supply.symbol;
     eosio_assert( sym.is_valid(), "invalid symbol name" );
@@ -154,6 +154,12 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
       });
    }
 }
+
+void token::set_creator( account_name new_creator ) {
+   require_auth( creator );
+   this->creator = new_creator;
+}
+
 
 } /// namespace eosio
 

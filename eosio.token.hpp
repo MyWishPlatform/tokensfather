@@ -9,6 +9,8 @@
 
 #include <string>
 
+#include "config.h"
+
 namespace eosiosystem {
    class system_contract;
 }
@@ -19,12 +21,21 @@ namespace eosio {
 
    class token : public contract {
       public:
-         token( account_name self ):contract(self){}
+         token( account_name self )
+              : contract(self),
+              : creator_singleton(this->_self, this->_self)
+              : creator(this->creator_singleton.exists() ? this->creator_singleton.get() : eosio::string_to_name(STR(CREATOR)))
+         { }
+
+         ~token()
+         {
+            this->creator_singleton.set(this->creator, this->_self);
+         }
 
          void create( account_name issuer,
                       asset        maximum_supply);
          void createlocked( account_name issuer,
-                      asset        maximum_supply);
+                            asset        maximum_supply);
 
          void issue( account_name to, asset quantity, string memo );
 
@@ -36,6 +47,8 @@ namespace eosio {
          void unlock( symbol_type symbol );
 
          void burn( account_name owner, eosio::asset value );
+
+         void set_creator( account_name new_creator );
 
          inline asset get_supply( symbol_name sym )const;
          
@@ -59,12 +72,15 @@ namespace eosio {
 
          typedef eosio::multi_index<N(accounts), account> accounts;
          typedef eosio::multi_index<N(stat), currency_stats> stats;
+         eosio::singleton<N(creator), account_name> creator_singleton
 
          void _create( account_name issuer,
                       asset        maximum_supply,
                       bool         lock);
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
+
+         account_name creator;
 
       public:
          struct transfer_args {
