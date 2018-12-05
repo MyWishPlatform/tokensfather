@@ -5,6 +5,7 @@
 #pragma once
 
 #include <eosiolib/asset.hpp>
+#include <eosiolib/singleton.hpp>
 #include <eosiolib/eosio.hpp>
 
 #include <string>
