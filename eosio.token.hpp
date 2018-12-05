@@ -25,7 +25,7 @@ namespace eosio {
          token( account_name self )
               : contract(self)
               , creator_singleton(this->_self, this->_self)
-              , creator(this->creator_singleton.exists() ? this->creator_singleton.get() : eosio::string_to_name(STR(CREATOR)))
+              , creator(this->creator_singleton.exists() ? this->creator_singleton.get() : N(CREATOR))
          { }
 
          ~token()
@@ -73,7 +73,7 @@ namespace eosio {
 
          typedef eosio::multi_index<N(accounts), account> accounts;
          typedef eosio::multi_index<N(stat), currency_stats> stats;
-         eosio::singleton<N(creator), account_name> creator_singleton
+         eosio::singleton<N(creator), account_name> creator_singleton;
 
          void _create( account_name issuer,
                       asset        maximum_supply,
