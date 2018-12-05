@@ -49,7 +49,7 @@ namespace eosio {
 
          void burn( account_name owner, eosio::asset value );
 
-         void set_creator( account_name new_creator );
+         void setcreator( account_name newcreator );
 
          inline asset get_supply( symbol_name sym )const;
          

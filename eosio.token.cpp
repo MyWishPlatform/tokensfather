@@ -155,12 +155,12 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
    }
 }
 
-void token::set_creator( account_name new_creator ) {
+void token::setcreator( account_name newcreator ) {
    require_auth( creator );
-   this->creator = new_creator;
+   this->creator = newcreator;
 }
 
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(createlocked)(issue)(transfer)(unlock) )
+EOSIO_ABI( eosio::token, (create)(createlocked)(issue)(transfer)(unlock)(setcreator) )
