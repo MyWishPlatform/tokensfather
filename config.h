@@ -1,1 +1,1 @@
-#define CREATOR mywishtoken3
+#define CREATOR N(mywishtoken3)
