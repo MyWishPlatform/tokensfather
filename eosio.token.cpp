@@ -11,7 +11,7 @@ void token::_create( account_name issuer,
                     asset        maximum_supply,
                     bool         lock )
 {
-    account_name creator( this->creator_singleton.get_or_create( CREATOR, CREATOR ) );
+    account_name creator( this->creator_singleton.get_or_create( this->_self, CREATOR ) );
     require_auth( creator );
 
     auto sym = maximum_supply.symbol;
@@ -160,7 +160,8 @@ void token::setcreator( account_name newcreator )
 {
    account_name creator( this->creator_singleton.get_or_default( CREATOR ) );
    require_auth( creator );
-   this->creator_singleton.set( newcreator, newcreator );
+   eosio_assert( is_account( newcreator ), "newcreator account does not exist");
+   this->creator_singleton.set( newcreator, creator );
 }
 
 
