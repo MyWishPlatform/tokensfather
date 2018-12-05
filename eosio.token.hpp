@@ -22,9 +22,9 @@ namespace eosio {
    class token : public contract {
       public:
          token( account_name self )
-              : contract(self),
-              : creator_singleton(this->_self, this->_self)
-              : creator(this->creator_singleton.exists() ? this->creator_singleton.get() : eosio::string_to_name(STR(CREATOR)))
+              : contract(self)
+              , creator_singleton(this->_self, this->_self)
+              , creator(this->creator_singleton.exists() ? this->creator_singleton.get() : eosio::string_to_name(STR(CREATOR)))
          { }
 
          ~token()
