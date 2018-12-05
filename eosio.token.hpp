@@ -25,13 +25,7 @@ namespace eosio {
          token( account_name self )
               : contract(self)
               , creator_singleton(this->_self, this->_self)
-              , creator(this->creator_singleton.exists() ? this->creator_singleton.get() : N(CREATOR))
          { }
-
-         ~token()
-         {
-            this->creator_singleton.set(this->creator, this->_self);
-         }
 
          void create( account_name issuer,
                       asset        maximum_supply);
@@ -80,8 +74,6 @@ namespace eosio {
                       bool         lock);
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
-
-         account_name creator;
 
       public:
          struct transfer_args {
