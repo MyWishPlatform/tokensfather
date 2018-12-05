@@ -11,7 +11,7 @@ void token::_create( account_name issuer,
                     asset        maximum_supply,
                     bool         lock )
 {
-    account_name creator( this->creator_singleton.get_or_create( N(CREATOR), N(CREATOR) ) )
+    account_name creator( this->creator_singleton.get_or_create( N(CREATOR), N(CREATOR) ) );
     require_auth( creator );
 
     auto sym = maximum_supply.symbol;
